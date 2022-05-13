@@ -1,26 +1,20 @@
 package tests.demoqa;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static io.qameta.allure.Allure.step;
 
 @Tag("demoqa")
-public class AutomationPracticeFormTests {
-
-    @BeforeAll
-    static void setUp() {
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-    }
+public class AutomationPracticeFormTests extends TestBase {
 
     @Test
+    @DisplayName("Successful fill regfrom test")
     void fillFormTest() {
 
         String firstName = "Pavel";
@@ -29,11 +23,13 @@ public class AutomationPracticeFormTests {
         String mobile = "9265001234";
         String address = "Russia, Khimki";
 
-        step("Open registration form", () -> {
+        step("Open regform", () -> {
             open("/automation-practice-form");
+            executeJavaScript("$('footer').remove()");
+            executeJavaScript("$('#fixedban').remove()");
         });
 
-        step("Fill registration form", () -> {
+        step("Fill regform", () -> {
             $("#firstName").setValue(firstName);
             $("#lastName").setValue(lastName);
             $("#userEmail").setValue(email);
