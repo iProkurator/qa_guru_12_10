@@ -9,6 +9,7 @@ repositories {
 
 dependencies {
     testImplementation(
+            'com.codeborne:selenide:6.3.5',
             'org.junit.jupiter:junit-jupiter:5.8.2',
             'org.slf4j:slf4j-simple:1.7.36',
             'io.qameta.allure:allure-selenide:2.17.3'
@@ -29,7 +30,9 @@ allure {
     }
 }
 
-wrapper { gradleVersion = '7.4.2' }
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 tasks.withType(Test) {
     useJUnitPlatform()
@@ -42,6 +45,10 @@ tasks.withType(Test) {
     }
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+task demoqa_tests(type: Test) {
+    useJUnitPlatform{
+        includeTags "demoqa"
+    }
 }
+
+
